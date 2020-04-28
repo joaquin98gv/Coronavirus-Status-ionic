@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { CoronavirusService } from '../../services/coronavirus.service';
 
 @Component({
   selector: 'app-tab2',
@@ -7,6 +9,9 @@ import { Component } from '@angular/core';
 })
 export class Tab2Page {
 
-  constructor() {}
+  data: any;
+  constructor( private coronavirusService: CoronavirusService ) {
+    coronavirusService.getWorldTotal().subscribe(x => this.data = x);
+  }
 
 }

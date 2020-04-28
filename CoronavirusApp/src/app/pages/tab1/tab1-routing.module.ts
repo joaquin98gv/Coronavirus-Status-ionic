@@ -8,7 +8,7 @@ const routes: Routes = [
     component: Tab1Page,
   },
   {
-    path: 'detalle/:position',
+    path: 'detalle/:pais/:position',
     loadChildren: () => import('../../pages/detalle/detalle.module').then(m => m.DetallePageModule)
   }
 ];

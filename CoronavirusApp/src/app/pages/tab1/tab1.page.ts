@@ -8,6 +8,7 @@ import { CoronavirusService } from '../../services/coronavirus.service';
 })
 export class Tab1Page {
 
+  pais: 'Bolivia';
   constructor(  ) {
   }
 

@@ -1,13 +1,35 @@
-<ion-header>
+<ion-header *ngIf="fechaData !== null">
     <ion-toolbar>
-        <ion-title>detalle</ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button color="tertiary" defaultHref="/"></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{ fechaData.Country }} - {{ fechaData.Date | date }}</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-    <pre>
-    {{ fechaData | json }}
-  </pre>
+    <ion-list color="dark">
+
+        <ion-item>
+            <ion-label>
+                <h1>Confirmados</h1>
+                <h2>{{ fechaData.Confirmed | number }}</h2>
+            </ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                <h1>Recuperados</h1>
+                <h2>{{ fechaData.Recovered | number }}</h2>
+            </ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                <h1>Muertos</h1>
+                <h2>{{ fechaData.Deaths | number }}</h2>
+            </ion-label>
+        </ion-item>
+
+    </ion-list>
 
 </ion-content>

@@ -1,44 +1,55 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CoronavirusService } from '../../services/coronavirus.service';
 import { Router } from '@angular/router';
-
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-lista',
   templateUrl: './lista.component.html',
   styleUrls: ['./lista.component.scss'],
 })
-export class ListaComponent {
+export class ListaComponent implements OnInit {
 
-  @Input() pais = 'bolivia';
+  loading = this.loadingController.create({
+    message: 'Por favor espere...'
+  });
+
+  @Input() esBolivia = true;
   data: any = [];
-  constructor( private coronavirusService: CoronavirusService, private router: Router ) {
-    this.obtenerData();
+  constructor(private coronavirusService: CoronavirusService, private router: Router, public loadingController: LoadingController ) {
    }
 
+  ngOnInit() {
+    // this.loading.then(x => x.present());
+    this.obtenerData();
+    // this.loading.then(x => x.dismiss());
+  }
+
   detalle(position: number) {
-    if (this.pais === 'bolivia') {
-      this.router.navigateByUrl(`tabs/tab1/detalle/${position}`);
+    if (this.esBolivia) {
+      this.router.navigate(['tabs/tab1/detalle', 'bolivia', position]);
     } else {
-      this.router.navigateByUrl(`tabs/tab2/detalle`);
+      this.router.navigate(['tabs/tab3/detalle', 'cuba', position]);
     }
   }
 
   obtenerData() {
-    if (this.pais === 'bolivia') {
+    if (this.esBolivia) {
       if (this.coronavirusService.dataBolivia.length === 0) {
-        this.coronavirusService.getCountry('bolivia').subscribe(resp => {
+        this.coronavirusService.getCountry('bolivia').subscribe((resp: any[]) => {
           this.data = resp;
-          this.coronavirusService.dataBolivia = resp;
+          this.data = this.data.reverse();
+          this.coronavirusService.dataBolivia = this.data;
         });
       } else {
         this.data = this.coronavirusService.dataBolivia;
       }
     } else {
       if (this.coronavirusService.dataCuba.length === 0) {
-        this.coronavirusService.getCountry('cuba').subscribe(resp => {
+        this.coronavirusService.getCountry('cuba').subscribe((resp: any[]) => {
           this.data = resp;
-          this.coronavirusService.dataCuba = resp;
+          this.data = this.data.reverse();
+          this.coronavirusService.dataCuba = this.data;
         });
       } else {
         this.data = this.coronavirusService.dataCuba;

@@ -10,11 +10,22 @@ import { CoronavirusService } from '../../services/coronavirus.service';
 export class DetallePage implements OnInit {
 
   position: number;
-  fechaData: any;
+  pais: string;
+  fechaData: any = null;
   constructor( private actRouter: ActivatedRoute, private coronavirusService: CoronavirusService ) {
 
+    this.pais = actRouter.snapshot.paramMap.get('pais');
     this.position = Number(actRouter.snapshot.paramMap.get('position'));
-    this.fechaData = coronavirusService.dataBolivia[this.position];
+    console.log('Pais: ' + this.pais);
+    console.log('Posicion: ' + this.position);
+    console.log('Bolivia: ' + coronavirusService.dataBolivia);
+    console.log('Cuba: ' + coronavirusService.dataCuba);
+    if (this.pais === 'bolivia') {
+      this.fechaData = coronavirusService.dataBolivia[this.position];
+    } else {
+      this.fechaData = coronavirusService.dataCuba[this.position];
+    }
+    console.log(this.fechaData);
    }
 
   ngOnInit() {
