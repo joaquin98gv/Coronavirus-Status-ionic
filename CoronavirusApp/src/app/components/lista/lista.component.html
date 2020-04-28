@@ -1,0 +1,11 @@
+<ion-list>
+    <ion-item detail *ngFor="let x of data; let i = index" (click)="detalle(i)">
+        <ion-label>
+            <h3> {{ x.Date | date }} </h3>
+        </ion-label>
+    </ion-item>
+</ion-list>
+
+<pre>
+  {{ data | json }}
+</pre>
